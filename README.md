@@ -36,6 +36,37 @@ During execution, the script will prompt you to:
 * Provide CA certificate details (if creating a new CA)
 * Decide whether to trust the CA system-wide
 
+## 🐳 Using with Docker and Microservices
+
+If you're working with microservices in a Docker-based environment, you can take advantage of Docker's DNS resolution to generate certificates for your containers. When using **Docker Compose**, you can set the container name as the `hostname` in the script, and Docker will resolve the service name automatically within the Docker network.
+
+For example, in your `docker-compose.yml`, you could have something like:
+
+```yaml
+services:
+  web:
+    image: mywebapp
+    container_name: webserver
+    networks:
+      - app-network
+  api:
+    image: myapi
+    container_name: apiserver
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+```
+
+In this case, you can run the script for the `web` container as follows:
+
+```bash
+./gen_certs_new.sh server webserver
+```
+
+This will generate a certificate for `webserver` with the appropriate Subject Alternative Name (SAN) and Extended Key Usage (EKU) for a server certificate. You can then mount the generated certificates into the corresponding containers, ensuring secure communication between your microservices.
+
 ## 📁 Output Structure
 
 Typical output under the certificate directory:
