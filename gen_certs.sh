@@ -50,13 +50,13 @@ if [[ ! -f "$CA_KEY" || ! -f "$CA_CERT" ]]; then
     CN=${CN:-MyRootCA.$DOMAIN}
     EMAIL=${EMAIL:-my.email@$DOMAIN}
 
-    echo "C=$C"     > "$CA_CONF"
-    echo "ST=$ST"   >> "$CA_CONF"
-    echo "L=$L"     >> "$CA_CONF"
-    echo "O=$O"     >> "$CA_CONF"
-    echo "OU=$OU"   >> "$CA_CONF"
-    echo "CN=$CN"   >> "$CA_CONF"
-    echo "EMAIL=$EMAIL" >> "$CA_CONF"
+    echo "C='$C'"     > "$CA_CONF"
+    echo "ST='$ST'"   >> "$CA_CONF"
+    echo "L='$L'"     >> "$CA_CONF"
+    echo "O='$O'"     >> "$CA_CONF"
+    echo "OU='$OU'"   >> "$CA_CONF"
+    echo "CN='$CN'"   >> "$CA_CONF"
+    echo "EMAIL='$EMAIL'" >> "$CA_CONF"
 
     CA_SUBJECT="/C=$C/ST=$ST/L=$L/O=$O/OU=$OU/CN=$CN/emailAddress=$EMAIL"
 
@@ -117,10 +117,10 @@ fi
 # Generate key and CSR for server/client
 SERVICE_CERT_DIR="$CERT_DIR/$HOSTNAME"
 mkdir -p "$SERVICE_CERT_DIR"
-KEY_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.key"
-CSR_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.csr"
-CRT_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.crt"
-EXT_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.ext"
+KEY_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.$TYPE.key"
+CSR_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.$TYPE.csr"
+CRT_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.$TYPE.crt"
+EXT_FILE="$SERVICE_CERT_DIR/$HOSTNAME.$DOMAIN.$TYPE.ext"
 
 openssl genrsa -out "$KEY_FILE" 2048
 
